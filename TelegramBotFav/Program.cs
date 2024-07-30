@@ -22,6 +22,7 @@ class Program
             AllowedUpdates = new[] // Тут указываем типы получаемых Update`ов, о них подробнее расказано тут https://core.telegram.org/bots/api#update
             {
                 UpdateType.Message, // Сообщения (текст, фото/видео, голосовые/видео сообщения и т.д.)
+                UpdateType.CallbackQuery
             },
             // Параметр, отвечающий за обработку сообщений, пришедших за то время, когда ваш бот был оффлайн
             // True - не обрабатывать, False (стоит по умолчанию) - обрабаывать
@@ -33,7 +34,7 @@ class Program
         // UpdateHander - обработчик приходящих Update`ов
         // ErrorHandler - обработчик ошибок, связанных с Bot API
         _botClient.StartReceiving(UpdateHandler, ErrorHandler, _receiverOptions, cts.Token); // Запускаем бота
-
+        
         var me = await _botClient.GetMeAsync(); // Создаем переменную, в которую помещаем информацию о нашем боте.
         Console.WriteLine($"{me.FirstName} запущен!");
 
@@ -105,6 +106,8 @@ class Program
                                             chat.Id,
                                             "Это inline клавиатура!",
                                             replyMarkup: inlineKeyboard); // Все клавиатуры передаются в параметр replyMarkup
+
+                                        Console.WriteLine("Inline keyboard created");
 
                                         return;
                                     }
