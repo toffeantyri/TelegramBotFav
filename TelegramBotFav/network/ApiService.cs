@@ -18,8 +18,8 @@ namespace TelegramBotFav.network
         public int Id { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
-        public int MaxWeightKg { get; set; }
-        public int MaxDistanceKm { get; set; }
+        public int Max_Weight_Kg { get; set; }
+        public int Max_Distance_Km { get; set; }
   
     }
 

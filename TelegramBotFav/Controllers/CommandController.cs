@@ -46,8 +46,11 @@ namespace TelegramBotFav.Controllers
 
                 case "/getTransportTypes": {
                         var transports = await apiService.GetTransportTypes();
-
-                        Console.WriteLine($" getTransportTypes {transports.ToString}");
+                        foreach (var item in transports)
+                        {
+                            Console.WriteLine($" getTransportTypes {item.Id} {item.Title} {item.Slug} {item.Max_Distance_Km} {item.Max_Weight_Kg}");
+                        }
+                        
                         break;
                     }
 
