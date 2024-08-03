@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using TelegramBotFav.network;
 
 namespace TelegramBotFav.Controllers
 {
     internal class CommandController
     {
         private ITelegramBotClient tgBotClient;
+        private ApiService apiService;
         
-        internal CommandController(ITelegramBotClient botClient)
+        internal CommandController(ITelegramBotClient botClient, ApiService api)
         {
             tgBotClient = botClient;
+            apiService = api;
         }
         public async Task ExecuteCommand(ChatId chatIdent,string command)
         {
@@ -38,6 +41,13 @@ namespace TelegramBotFav.Controllers
                              chatIdent,
                              "Бот запущен"
                             );
+                        break;
+                    }
+
+                case "/getTransportTypes": {
+                        var transports = await apiService.GetTransportTypes();
+
+                        Console.WriteLine($" getTransportTypes {transports.ToString}");
                         break;
                     }
 

@@ -16,7 +16,11 @@ namespace TelegramBotFav
 
         public DeliveryController(string newBaseUrl)
         {
-            api = RestService.For<ApiService>(newBaseUrl);
+            var handler = new LoggingHandler();
+            var client = new HttpClient(handler);
+            client.BaseAddress = new Uri(newBaseUrl);
+            api = RestService.For<ApiService>(client);
+
         }
 
         public ReceiverOptions GetReceiverOptions()
@@ -56,14 +60,16 @@ namespace TelegramBotFav
                     Console.WriteLine($"{user.FirstName} ({user.Id}) написал сообщение: {message.Text}");
                 }
 
-                var commandContr = new CommandController(botClient);
+                var commandContr = new CommandController(botClient, api);
 
                 switch (update.Type)
                 {
                     case UpdateType.Message:
                         {
-                            switch (message.Type) { 
-                                case MessageType.Text: {
+                            switch (message.Type)
+                            {
+                                case MessageType.Text:
+                                    {
                                         if (message.Text.StartsWith("/"))
                                         {
                                             await commandContr.ExecuteCommand(message.Chat.Id, message.Text);
@@ -95,7 +101,10 @@ namespace TelegramBotFav
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"OnUpdate Error: {ex.ToString}");
+                Console.WriteLine($"OnUpdate Error: {ex.Message}");
+
+                Console.WriteLine($"OnUpdate Error: {ex.StackTrace}");
+
             }
 
         }
