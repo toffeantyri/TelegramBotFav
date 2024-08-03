@@ -1,18 +1,19 @@
 ﻿using Telegram.Bot;
 using TelegramBotFav;
+using TelegramBotFav.Models;
 
-class Program
+class Startup
 {
     // Это клиент для работы с Telegram Bot API, который позволяет отправлять сообщения, управлять ботом, подписываться на обновления и многое другое.
     private static ITelegramBotClient _botClient;
 
     static async Task Main()
     {
-        _botClient = new TelegramBotClient("7119492116:AAGi4U5l-hgZpxq-DPEtUpv3mr3VMrh9kk4"); // Присваиваем нашей переменной значение, в параметре передаем Token, полученный от BotFather
+        _botClient = new TelegramBotClient(AppSettings.Token); // Присваиваем нашей переменной значение, в параметре передаем Token, полученный от BotFather
 
         using var cts = new CancellationTokenSource();
 
-        IMessageHandler messageHandler = new TestMessageHandlerImpl(); 
+        IMessageHandler messageHandler = new DeliveryController(AppSettings.BaseUrl); 
        
         _botClient.StartReceiving(
             messageHandler.OnUpdateHandler,  // UpdateHander - обработчик приходящих Update`ов
