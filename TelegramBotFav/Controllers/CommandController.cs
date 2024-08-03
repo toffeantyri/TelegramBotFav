@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Requests.Abstractions;
 using Telegram.Bot.Types;
 using TelegramBotFav.network;
 
@@ -13,13 +14,13 @@ namespace TelegramBotFav.Controllers
     {
         private ITelegramBotClient tgBotClient;
         private ApiService apiService;
-        
+
         internal CommandController(ITelegramBotClient botClient, ApiService api)
         {
             tgBotClient = botClient;
             apiService = api;
         }
-        public async Task ExecuteCommand(ChatId chatIdent,string command)
+        public async Task ExecuteCommand(ChatId chatIdent, string command)
         {
             switch (command)
             {
@@ -44,13 +45,14 @@ namespace TelegramBotFav.Controllers
                         break;
                     }
 
-                case "/getTransportTypes": {
+                case "/getTransportTypes":
+                    {  
                         var transports = await apiService.GetTransportTypes();
+                        
                         foreach (var item in transports)
                         {
-                            Console.WriteLine($" getTransportTypes {item.Id} {item.Title} {item.Slug} {item.Max_Distance_Km} {item.Max_Weight_Kg}");
+                            await tgBotClient.SendTextMessageAsync(chatIdent, item.ToString());
                         }
-                        
                         break;
                     }
 

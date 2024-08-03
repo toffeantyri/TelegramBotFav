@@ -20,7 +20,15 @@ namespace TelegramBotFav.network
         public string Slug { get; set; }
         public int Max_Weight_Kg { get; set; }
         public int Max_Distance_Km { get; set; }
-  
+
+        public override string ToString()
+        {
+            return $"Типа транспорта {Id} - {Title} - {Slug}\n" +
+                $"Максимальный вес: {Max_Weight_Kg} кг\n" +
+                $"Максимальное расстояние: {Max_Distance_Km} км \n";
+
+            
+        }
     }
 
 }
