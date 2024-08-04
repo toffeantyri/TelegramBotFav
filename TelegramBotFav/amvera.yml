@@ -2,7 +2,7 @@ meta:
   environment: csharp
   toolchain:
     name: dotnet
-    version: 6.0
+    version: 8.0
 build:
   image: mcr.microsoft.com/dotnet/sdk:6.032
 run:
