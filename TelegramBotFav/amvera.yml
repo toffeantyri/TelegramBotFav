@@ -2,11 +2,9 @@ meta:
   environment: csharp
   toolchain:
     name: dotnet
-    version: 6.0
-build:
-  image: mcr.microsoft.com/dotnet/sdk:6.0
+    version: 6.0.32
+build: {}
 run:
-  image: mcr.microsoft.com/dotnet/sdk:6.0
-  buildFileName: WebService
   persistenceMount: /data
   containerPort: 80
+  buildFileName: WebService
