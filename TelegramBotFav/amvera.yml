@@ -2,9 +2,11 @@ meta:
   environment: csharp
   toolchain:
     name: dotnet
-    version: 6.0.32
-build: {}
+    version: 6.0
+build:
+  image: mcr.microsoft.com/dotnet/sdk:6.032
 run:
+  image: mcr.microsoft.com/dotnet/sdk:6.0.32
+  buildFileName: TelegramBotTuk
   persistenceMount: /data
   containerPort: 80
-  buildFileName: WebService
